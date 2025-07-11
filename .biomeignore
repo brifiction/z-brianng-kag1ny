@@ -1,0 +1,6 @@
+# Ignore all files since this project uses ESLint + Prettier
+**/*
+src/**/*
+*.ts
+*.js
+*.json 
