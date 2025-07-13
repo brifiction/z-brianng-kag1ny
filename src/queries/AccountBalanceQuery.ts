@@ -5,6 +5,15 @@ import {
   createEmptyAccountState,
   loadFromHistory,
 } from '@/domain/Account/Account';
+import {
+  GetAccountBalanceQuerySchema,
+  GetAccountBalanceResponseSchema,
+  GetAllAccountsResponseSchema,
+  type GetAccountBalanceQuery,
+  type GetAccountBalanceResponse,
+  type GetAllAccountsQuery,
+  type GetAllAccountsResponse,
+} from '@/shared/schemas/query';
 
 // Response factory functions (co-located with handlers)
 const createSuccessQueryResponse = <TResult>(
@@ -27,45 +36,46 @@ const createErrorQueryResponse = (
   timestamp: startOfSecond(new Date()),
 });
 
-// Query response models (co-located with handlers)
+// Query models using Zod schemas
 export namespace GetAccountBalance {
-  export interface Request {
-    readonly accountId: string;
-  }
-
-  export interface Response {
-    readonly accountId: string;
-    readonly balance: number;
-    readonly version: number;
-    readonly lastUpdated: Date;
-  }
+  export type Query = GetAccountBalanceQuery;
+  export type Response = GetAccountBalanceResponse;
 
   export const handle = async (
-    request: Request,
+    query: Query,
     eventStore: EventStore
   ): Promise<QueryResponse<Response>> => {
     try {
+      // Validate query input
+      const validatedQuery = GetAccountBalanceQuerySchema.parse(query);
+
       // Load account from event history
-      const events = await eventStore.getEvents(request.accountId);
+      const events = await eventStore.getEvents(validatedQuery.accountId);
 
       if (events.length === 0) {
         return createErrorQueryResponse(
-          `Account ${request.accountId} not found`
+          `Account ${validatedQuery.accountId} not found`
         );
       }
 
       // Reconstruct account state
-      const initialState = createEmptyAccountState(request.accountId);
+      const initialState = createEmptyAccountState(validatedQuery.accountId);
       const currentState = loadFromHistory(initialState, events);
 
-      // Return success response
-      return createSuccessQueryResponse({
-        accountId: request.accountId,
+      // Create response and validate it
+      const response: Response = {
+        accountId: validatedQuery.accountId,
         balance: currentState.balance,
         version: events.length,
         lastUpdated:
           events[events.length - 1]?.timestamp || startOfSecond(new Date()),
-      });
+      };
+
+      // Validate response
+      GetAccountBalanceResponseSchema.parse(response);
+
+      // Return success response
+      return createSuccessQueryResponse(response);
     } catch (error) {
       return createErrorQueryResponse(
         `Failed to get account balance: ${error instanceof Error ? error.message : 'Unknown error'}`
@@ -75,16 +85,11 @@ export namespace GetAccountBalance {
 }
 
 export namespace GetAllAccounts {
-  export interface Response {
-    readonly accounts: Array<{
-      readonly accountId: string;
-      readonly balance: number;
-      readonly version: number;
-    }>;
-    readonly totalCount: number;
-  }
+  export type Query = GetAllAccountsQuery;
+  export type Response = GetAllAccountsResponse;
 
   export const handle = async (
+    query: Query,
     eventStore: EventStore
   ): Promise<QueryResponse<Response>> => {
     try {
@@ -112,11 +117,17 @@ export namespace GetAllAccounts {
         });
       }
 
-      // Return success response
-      return createSuccessQueryResponse({
+      // Create response and validate it
+      const response: Response = {
         accounts,
         totalCount: accounts.length,
-      });
+      };
+
+      // Validate response
+      GetAllAccountsResponseSchema.parse(response);
+
+      // Return success response
+      return createSuccessQueryResponse(response);
     } catch (error) {
       return createErrorQueryResponse(
         `Failed to get all accounts: ${error instanceof Error ? error.message : 'Unknown error'}`
