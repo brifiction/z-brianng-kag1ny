@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { startOfSecond } from 'date-fns';
+
 import type {
   AccountCreatedEvent,
   AccountCreatedEventData,
@@ -18,7 +18,7 @@ export const createAccountCreatedEvent = (
   aggregateId,
   eventType: 'AccountCreated',
   eventData,
-  timestamp: startOfSecond(new Date()),
+  timestamp: new Date(),
   version,
 });
 
@@ -32,7 +32,7 @@ export const createMoneyWithdrawnEvent = (
   aggregateId,
   eventType: 'MoneyWithdrawn',
   eventData,
-  timestamp: startOfSecond(new Date()),
+  timestamp: new Date(),
   version,
 });
 
@@ -46,6 +46,6 @@ export const createInsufficientFundsEvent = (
   aggregateId,
   eventType: 'InsufficientFunds',
   eventData,
-  timestamp: startOfSecond(new Date()),
+  timestamp: new Date(),
   version,
 });

@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { startOfSecond } from 'date-fns';
+
 import type { CreateAccountCommand, WithdrawMoneyCommand } from './types';
 
 // Factory function for creating `CreateAccountCommand`
@@ -9,7 +9,7 @@ export const createCreateAccountCommand = (
 ): CreateAccountCommand => ({
   commandId: uuidv4(),
   aggregateId: accountId,
-  timestamp: startOfSecond(new Date()),
+  timestamp: new Date(),
   commandType: 'CreateAccount',
   commandData: {
     accountId,
@@ -24,7 +24,7 @@ export const createWithdrawMoneyCommand = (
 ): WithdrawMoneyCommand => ({
   commandId: uuidv4(),
   aggregateId: accountId,
-  timestamp: startOfSecond(new Date()),
+  timestamp: new Date(),
   commandType: 'WithdrawMoney',
   commandData: {
     accountId,

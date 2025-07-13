@@ -1,4 +1,3 @@
-import { startOfSecond } from 'date-fns';
 import type { EventStore, CommandResponse } from '@/shared/types';
 import {
   createAccount,
@@ -29,7 +28,7 @@ const createSuccessResponse = <TResult>(
   success: true,
   result,
   commandId,
-  timestamp: startOfSecond(new Date()),
+  timestamp: new Date(),
 });
 
 const createErrorResponse = (
@@ -39,7 +38,7 @@ const createErrorResponse = (
   success: false,
   error,
   commandId,
-  timestamp: startOfSecond(new Date()),
+  timestamp: new Date(),
 });
 
 /* Account command handler - Create account command */

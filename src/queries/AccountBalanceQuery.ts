@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { startOfSecond } from 'date-fns';
+
 import type { EventStore, QueryResponse } from '@/shared/types';
 import {
   createEmptyAccountState,
@@ -23,7 +23,7 @@ const createSuccessQueryResponse = <TResult>(
   success: true,
   result,
   queryId: queryId || uuidv4(),
-  timestamp: startOfSecond(new Date()),
+  timestamp: new Date(),
 });
 
 const createErrorQueryResponse = (
@@ -33,7 +33,7 @@ const createErrorQueryResponse = (
   success: false,
   error,
   queryId: queryId || uuidv4(),
-  timestamp: startOfSecond(new Date()),
+  timestamp: new Date(),
 });
 
 // Query models using Zod schemas
@@ -67,8 +67,7 @@ export namespace GetAccountBalance {
         accountId: validatedQuery.accountId,
         balance: currentState.balance,
         version: events.length,
-        lastUpdated:
-          events[events.length - 1]?.timestamp || startOfSecond(new Date()),
+        lastUpdated: events[events.length - 1]?.timestamp || new Date(),
       };
 
       // Validate response

@@ -7,7 +7,7 @@
  * For event storage and retrieval mechanics, see EventStore.persistence.test.ts.
  */
 import { v4 as uuidv4 } from 'uuid';
-import { startOfSecond } from 'date-fns';
+
 import type { EventStore } from '@/shared/types';
 import { createInMemoryEventStore } from '@/infrastructure/InMemoryEventStore';
 import {
@@ -49,7 +49,7 @@ describe('EventStoreService', () => {
         accountId: 'account-123',
         initialBalance: 1000,
       },
-      timestamp: startOfSecond(new Date()),
+      timestamp: new Date(),
       version: 1,
     });
 
@@ -132,7 +132,7 @@ describe('EventStoreService', () => {
         amount: 100,
         newBalance: 900,
       },
-      timestamp: startOfSecond(new Date()),
+      timestamp: new Date(),
       version: 2,
     });
 
@@ -213,7 +213,7 @@ describe('EventStoreService', () => {
         requestedAmount: 1500,
         currentBalance: 1000,
       },
-      timestamp: startOfSecond(new Date()),
+      timestamp: new Date(),
       version: 2,
     });
 
@@ -318,7 +318,7 @@ describe('EventStoreService', () => {
           accountId: 'account-123',
           initialBalance: 1000,
         },
-        timestamp: startOfSecond(new Date()),
+        timestamp: new Date(),
         version: 1,
       };
       const service = createEventHandlerService(eventStore);
@@ -344,7 +344,7 @@ describe('EventStoreService', () => {
           amount: 100,
           newBalance: 900,
         },
-        timestamp: startOfSecond(new Date()),
+        timestamp: new Date(),
         version: 2,
       };
       const service = createEventHandlerService(eventStore);
@@ -370,7 +370,7 @@ describe('EventStoreService', () => {
           requestedAmount: 1500,
           currentBalance: 1000,
         },
-        timestamp: startOfSecond(new Date()),
+        timestamp: new Date(),
         version: 2,
       };
       const service = createEventHandlerService(eventStore);
@@ -397,7 +397,7 @@ describe('EventStoreService', () => {
           accountId: 'account-123',
           initialBalance: 1000,
         },
-        timestamp: startOfSecond(new Date()),
+        timestamp: new Date(),
         version: 1,
       };
       const mockEventStore: EventStore = {
@@ -426,7 +426,7 @@ describe('EventStoreService', () => {
           accountId: 'account-123',
           initialBalance: 1000,
         },
-        timestamp: startOfSecond(new Date()),
+        timestamp: new Date(),
         version: 1,
       };
       const mockEventStore: EventStore = {

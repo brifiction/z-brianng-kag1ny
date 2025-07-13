@@ -1,4 +1,4 @@
-import { startOfSecond } from 'date-fns';
+
 import type { EventStore } from '@/shared/types';
 import {
   AccountCreatedEventSchema,
@@ -15,7 +15,7 @@ const createSuccessEventResponse = (
 ): { success: true; eventId: string; timestamp: Date } => ({
   success: true,
   eventId,
-  timestamp: startOfSecond(new Date()),
+  timestamp: new Date(),
 });
 
 const createErrorEventResponse = (
@@ -25,7 +25,7 @@ const createErrorEventResponse = (
   success: false,
   error,
   eventId,
-  timestamp: startOfSecond(new Date()),
+  timestamp: new Date(),
 });
 
 /* Account event handler - Account Created Event */
