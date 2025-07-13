@@ -53,7 +53,9 @@ export namespace CreateAccount {
   ): Promise<CommandResponse<Response>> => {
     try {
       // Validate command data
-      const validatedCommandData = CreateAccountCommandSchema.parse(command.commandData);
+      const validatedCommandData = CreateAccountCommandSchema.parse(
+        command.commandData
+      );
 
       // Check if account already exists
       const existingEvents = await eventStore.getEvents(
@@ -112,7 +114,9 @@ export namespace WithdrawMoney {
   ): Promise<CommandResponse<Response>> => {
     try {
       // Validate command data
-      const validatedCommandData = WithdrawMoneyCommandSchema.parse(command.commandData);
+      const validatedCommandData = WithdrawMoneyCommandSchema.parse(
+        command.commandData
+      );
 
       // Load account from event history
       const events = await eventStore.getEvents(validatedCommandData.accountId);
@@ -145,7 +149,7 @@ export namespace WithdrawMoney {
           newState.uncommittedEvents,
           events.length
         );
-        
+
         // Return error response for insufficient funds
         return createErrorResponse(
           `Insufficient funds for account ${validatedCommandData.accountId}. Requested: ${validatedCommandData.amount}, Available: ${currentState.balance}`,
