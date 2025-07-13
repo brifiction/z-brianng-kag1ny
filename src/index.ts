@@ -27,3 +27,4 @@ export * from './application/Account/CommandHandler';
 export * from './infrastructure/services/EventStoreService';
 export * from './infrastructure/InMemoryEventStore';
 export * from './queries/AccountBalanceQuery';
+
