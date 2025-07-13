@@ -23,7 +23,7 @@ export * from './domain/Account/Account';
 export * from './domain/Account/Commands';
 export * from './domain/Account/Events';
 export * from './application/Account/CommandHandler';
-export * from './application/Account/EventHandler';
+export * from './infrastructure/services/EventStoreService';
 export * from './infrastructure/InMemoryEventStore';
 export * from './queries/AccountBalanceQuery';
 
