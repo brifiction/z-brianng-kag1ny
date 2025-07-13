@@ -11,7 +11,10 @@
  * - Domain: Account aggregate with pure business logic
  * - Commands: CreateAccount, WithdrawMoney
  * - Events: AccountCreated, MoneyWithdrawn, InsufficientFunds
+ * - Command Handler: Handles commands and updates the account
+ * - Event Handler: Handles events and updates the account
  * - InMemoryEventStore: In-memory event persistence
+ * - AccountBalanceQuery: Query to get the account balance
  */
 
 export * from './shared/types';
@@ -19,7 +22,10 @@ export * from './shared/schemas/event';
 export * from './domain/Account/Account';
 export * from './domain/Account/Commands';
 export * from './domain/Account/Events';
+export * from './application/Account/CommandHandler';
+export * from './application/Account/EventHandler';
 export * from './infrastructure/InMemoryEventStore';
+export * from './queries/AccountBalanceQuery';
 
 console.log(
   'Run "npm test" to see the patterns demonstrated through comprehensive test cases.'
