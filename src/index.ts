@@ -27,7 +27,3 @@ export * from './application/Account/CommandHandler';
 export * from './infrastructure/services/EventStoreService';
 export * from './infrastructure/InMemoryEventStore';
 export * from './queries/AccountBalanceQuery';
-
-console.log(
-  'Run "npm test" to see the patterns demonstrated through comprehensive test cases.'
-);

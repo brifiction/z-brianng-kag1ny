@@ -44,12 +44,6 @@ export namespace AccountCreated {
     try {
       const validatedEvent = AccountCreatedEventSchema.parse(event);
 
-      console.log(
-        `[${validatedEvent.timestamp.toISOString()}] Processing Account Created Event: ${
-          validatedEvent.eventData.accountId
-        } with initial balance: ${validatedEvent.eventData.initialBalance}`
-      );
-
       // Get current events count to determine expected version
       const existingEvents = await eventStore.getEvents(
         validatedEvent.aggregateId
@@ -87,14 +81,6 @@ export namespace MoneyWithdrawn {
   ): Promise<Response> => {
     try {
       const validatedEvent = MoneyWithdrawnEventSchema.parse(event);
-
-      console.log(
-        `[${validatedEvent.timestamp.toISOString()}] Processing Money Withdrawn Event: ${
-          validatedEvent.eventData.amount
-        } from account ${validatedEvent.eventData.accountId}. New balance: ${
-          validatedEvent.eventData.newBalance
-        }`
-      );
 
       // Get current events count to determine expected version
       const existingEvents = await eventStore.getEvents(
@@ -134,13 +120,7 @@ export namespace InsufficientFunds {
     try {
       const validatedEvent = InsufficientFundsEventSchema.parse(event);
 
-      console.log(
-        `[${validatedEvent.timestamp.toISOString()}] Processing Insufficient Funds Event: Withdraw attempt with amount ${
-          validatedEvent.eventData.requestedAmount
-        } from account ${validatedEvent.eventData.accountId} failed. Current balance is ${
-          validatedEvent.eventData.currentBalance
-        }`
-      );
+
 
       // Get current events count to determine expected version
       const existingEvents = await eventStore.getEvents(
