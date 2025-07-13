@@ -13,7 +13,8 @@
  * - Events: AccountCreated, MoneyWithdrawn, InsufficientFunds
  * - Command Handler: Handles commands and updates the account
  * - Event Handler: Handles events and updates the account
- * - InMemoryEventStore: In-memory event persistence
+ * - Event Store Service: Handles event persistence and retrieval
+ * - InMemoryEventStore: In-memory event persistence (for demo purposes, without relational database)
  * - AccountBalanceQuery: Query to get the account balance
  */
 
