@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { startOfSecond } from 'date-fns';
 import type { CreateAccountCommand, WithdrawMoneyCommand } from './types';
 
-// Factory function for creating CreateAccountCommand
+// Factory function for creating `CreateAccountCommand`
 export const createCreateAccountCommand = (
   accountId: string,
   initialBalance: number
@@ -17,7 +17,7 @@ export const createCreateAccountCommand = (
   },
 });
 
-// Factory function for creating WithdrawMoneyCommand
+// Factory function for creating `WithdrawMoneyCommand`
 export const createWithdrawMoneyCommand = (
   accountId: string,
   amount: number

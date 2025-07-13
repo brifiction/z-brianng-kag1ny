@@ -3,7 +3,7 @@ import {
   createAccountCreatedEvent,
   createMoneyWithdrawnEvent,
   createInsufficientFundsEvent,
-} from './events';
+} from './Events';
 import type {
   AccountCreatedEventData,
   MoneyWithdrawnEventData,
