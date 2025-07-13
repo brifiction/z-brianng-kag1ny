@@ -121,6 +121,26 @@ export namespace WithdrawMoney {
       // Execute business logic
       const newState = withdrawMoney(currentState, command.commandData.amount);
 
+      // Check if an insufficient funds event was generated
+      const insufficientFundsEvent = newState.uncommittedEvents.find(
+        event => event.eventType === 'InsufficientFunds'
+      );
+
+      if (insufficientFundsEvent) {
+        // Save insufficient funds events before returning error
+        await eventStore.saveEvents(
+          command.commandData.accountId,
+          newState.uncommittedEvents,
+          events.length
+        );
+        
+        // Return error response for insufficient funds
+        return createErrorResponse(
+          `Insufficient funds for account ${command.commandData.accountId}. Requested: ${command.commandData.amount}, Available: ${currentState.balance}`,
+          command.commandId
+        );
+      }
+
       // Save new events if any were generated
       if (newState.uncommittedEvents.length > 0) {
         await eventStore.saveEvents(
